@@ -1,0 +1,44 @@
+<form action="{% url 'accounts:profile' %}" method="POST" id="update-profile-form">
+    {% csrf_token %}
+    <fieldset>
+        <div class="row">
+            <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                <label for="id_first_name">First Name <span class="required">*</span></label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                <label for="id_last_name">Last Name <span class="required">*</span></label>
+                {{ form.last_name }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12 col-lg-12 col-xl-12">
+                <label for="id_email">E-Mail <span class="required">*</span></label>
+                {{ form.email }}
+                <div id="js-validate-email-error" class="js-validate-email-error text-danger" role="alert" data-url="{% url 'accounts:ajax-validate-email' %}" style="display: none;">
+                </div>
+            </div>
+        </div>
+        <!-- Display email error message -->
+        {% if form.email.errors %}
+            {% for error in form.email.errors %}
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-danger pl-0 pb-2" role="alert">
+                <p class="error-message">
+                    <strong>{{ error|escape }}</strong>
+                </p>
+            </div>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                <label for="input-telephone">Telephone <span class="required">*</span></label>
+                <input name="telephone" value="" id="input-telephone" class="form-control" type="tel">
+            </div>
+            <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                <label>Birthdate <span class="required">*</span></label>
+                <input name="birthdate" max="3000-12-31" min="1000-01-01" class="form-control" type="date">
+            </div>
+        </div>
+    </fieldset>
+    <button type="submit" class="text-right btn margin-15px-top btn-primary" id="save">Save</button>
+</form>

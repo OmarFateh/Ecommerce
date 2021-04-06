@@ -1,0 +1,20 @@
+{% for order in orders %}
+{% with counter=forloop.counter %}
+    {% for item in order.items.all %}
+    <tr>
+        <td class="text-center">{{ counter }}</td>
+        <td class="text-center">{{ item.variation }}</td>
+        <td class="text-center">{{ item.created_at|date:"d M Y" }}, {{ item.created_at|time:"H:i" }}</td>
+        <td>Processing</td>
+        <td>${{ item.price }}</td>
+        <td class="text-center">{{ item.quantity }}</td>
+        <td>${{ item.get_total_price }}</td>
+        <td class="text-center"><button class="btn review" data-url="" data-index="{{ item.variation.product.id }}" d>view</button></td>
+    </tr>
+    {% endfor %}
+{% endwith %}
+{% empty %}
+<tr>
+    <td colspan="8" class="text-center bg-warning">No orders have been made yet.</td>
+</tr>
+{% endfor %}    

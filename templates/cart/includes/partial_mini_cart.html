@@ -1,0 +1,76 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div id="cart-drawer" class="block block-cart">
+            <a href="javascript:void(0);" class="close-cart" data-dismiss="modal" aria-label="Close"><i
+                    class="anm anm-times-r"></i>
+            </a>
+            {% with total_qty=cart|length %} 
+            <h4>Shopping Cart
+                <span>(<span class='cart-qty-count'>{{ total_qty }}</span>
+                <span class='cart-qty-count-items'>Item{{ total_qty|pluralize }}</span>)
+                </span>
+            </h4>
+            {% if total_qty %}
+            <div class="minicart-content">
+                <ul class="clearfix">
+                    {% for item in cart %}
+                    <li class="item clearfix product-item" data-index="{{ item.variation_id }}">
+                        <a class="product-image" href="{{ item.variation_product_url }}">
+                            <img src="{{ item.variation_image }}" alt="" title="">
+                        </a>
+                        <div class="product-details">
+                            <button type="button" name="delete" class="btn btn--secondary remove bg-white delete-from-cart-btn" data-url="{% url 'cart:cart-update-delete' %}"
+                            data-index="{{ item.variation_id }}" title="Remove">
+                            <i class="fa fa-close"></i>
+                            </button>        
+                            <a class="product-title" href="{{ item.variation_product_url }}">{{ item.variation_product_name|title }}</a>
+                            <div class="variant-cart">{{ item.variation_color|title }} / {{ item.variation_size|upper }}</div>
+                            <div class="wrapQtyBtn">
+                                <div class="qtyField">
+                                    <a class="qtyBtn minus" href="javascript:void(0);"><i
+                                            class="anm anm-minus-r" aria-hidden="true"></i></a>
+                                    <input type="text" name="quantity" value="{{ item.qty }}" class="qty" id="mini-qty{{ item.variation_id }}">
+                                    <a class="qtyBtn plus" href="javascript:void(0);"><i
+                                            class="anm anm-plus-r" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                            <div class="priceRow">
+                                <div class="product-price">
+                                    <span class="money">${{ item.variation_actual_price }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="minicart-bottom">
+                <div class="subtotal list">
+                    <span>Shipping:</span>
+                    <span class="product-price">$10.00</span>
+                </div>
+                <div class="subtotal list">
+                    <span>Tax:</span>
+                    <span class="product-price">$05.00</span>
+                </div>
+                <div class="subtotal">
+                    <span>Total:</span>
+                    <span class="product-price">$<span class="cart-total-price">{{ cart.get_total_price }}</span></span>
+                </div>
+                <a href="{% url 'checkout:checkout' %}">
+                    <button id="mini-cart-checkout" class="btn proceed-to-checkout">Proceed To Checkout</button>
+                </a>
+                <a href="{% url 'cart:cart-summary' %}">
+                    <button type="button" class="btn btn-secondary cart-btn">View Cart</button>
+                </a>
+            </div>
+            {% else %}
+            <div class="cart-empty-state d-flex align-items-center justify-content-center flex-column">
+                <i class="fa fa-shopping-cart"></i>
+                <p class="cart-empty-state-text">Your Shopping Cart is Empty.</p>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+{% if is_review_allowed %}
+<div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-4">
+    {% include 'product/includes/partial_product_user_review.html' %}
+</div>
+{% endif %}
+<div {% if is_review_allowed %} class="col-12 col-sm-12 col-md-6 col-lg-6" {% else %} class="col-12 col-sm-12 col-md-12 col-lg-12" {% endif %}>
+    <div class="spr-reviews">
+        <h3 class="spr-form-title">Customer Reviews</h3>
+        <div class="review-inner">
+            {% for review in reviews %}
+            <div class="spr-review">
+                <div class="spr-review-header">
+                    <span class="product-review spr-starratings spr-review-header-starratings">
+                        <span class="reviewLink">
+                            <div class="star-ratings-css">
+                                <div class="star-ratings-css-top" style="width: {{ review.get_rate_precentage }}%">
+                                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                </div>
+                                <div class="star-ratings-css-bottom">
+                                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                </div>
+                            </div>
+                        </span>
+                    </span>
+                    <h3 class="spr-review-header-title">{{ review.title }}</h3>
+                    <span class="spr-review-header-byline"><strong>{{ review.user.first_name|title }}</strong> on
+                        <strong>{{ review.created_at|date:"d M Y" }}</strong></span>
+                </div>
+                <div class="spr-review-content">
+                    <p class="spr-review-content-body">{{ review.content }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p>No reviews have been added yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>

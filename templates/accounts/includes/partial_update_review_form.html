@@ -1,0 +1,17 @@
+<!-- form start -->
+<form role="form" action='{% url "accounts:update-delete-review" form.instance.pk %}' method='POST' class="js-update-review-form">
+    {% csrf_token %}
+    <!-- modal header -->
+    <div class="modal-header">
+        <h4 class="modal-title">Update Review</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!-- modal body -->
+    <div class="modal-body">
+        <div class="card-body">
+            {% include 'accounts/includes/partial_review_form.html' %}
+        </div>
+    </div>
+</form>

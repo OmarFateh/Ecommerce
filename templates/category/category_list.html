@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load category_tags %}
+
+{% block title %}
+<title>
+    {% for category in category_ancestors %}
+    {{ category.name|title }}
+    {% if not forloop.last %} | {% endif %}
+    {% endfor %}
+</title>
+{% endblock title %}
+
+{% block content %}
+
+<div id="page-content">
+    <!--Body Container-->
+    <!--Breadcrumbs-->
+    <div class="breadcrumbs-wrapper">
+        <div class="container">
+            <div class="breadcrumbs"><a href="{% url 'home:index' %}" title="Back to the home page">Home</a> 
+                {% for category in category_ancestors %}
+                    {% if not forloop.last %} 
+                    <span aria-hidden="true">|</span> <a href="{{ category.get_absolute_url }}">{{ category.name|title }}</a>
+                    {% else %} 
+                    <span aria-hidden="true">|</span><span>{{ category.name|title }}</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!--End Breadcrumbs-->
+    <div class="container">
+        <div class="row">
+            <!--Sidebar-->
+            <div class="col-12 col-sm-12 col-md-3 col-lg-3 sidebar filterbar">
+                <div class="closeFilter d-block d-md-none d-lg-none"><i class="icon icon anm anm-times-l"></i></div>
+                <div class="sidebar_tags">
+                    <!--Categories-->
+                    <div class="sidebar_widget categories filter-widget">
+                        <div class="widget-title" id='root-category' data-url="{{ category.get_absolute_url }}">
+                            <h2>{{ category.get_root.name }}</h2>
+                        </div>
+                        <div class="widget-content">
+                            <ul class="sidebar_categories">
+                                {% for child in category.get_root.get_children %}
+                                    {% if child.get_children %}
+                                    <li class="level1 sub-level"><a href="#;" class="site-nav {% if child == category.get_parent or child == category %}
+                                        category
+                                        {% endif %}" 
+                                        {% if child == category.get_parent or child == category %} style="color: #0000fe;"{% endif %}>
+                                        {{ child.name|title }}</a>
+                                        <ul class="sublinks" style="display: none;">
+                                            {% for grandchild in child.get_children %}
+                                            <li class="level2"><a href="{{ grandchild.get_absolute_url }}" class="site-nav"
+                                                {% if grandchild == category %}
+                                                style="color: #e80808;"
+                                                {% endif %}>
+                                                {{ grandchild.name|title }}</a>
+                                            </li>
+                                            {% endfor %}
+                                            <!-- <li class="level2"><a href="#;" class="site-nav">View All Clothing</a></li> -->
+                                        </ul>
+                                    </li>
+                                    {% else %}
+                                    <li class="lvl-1"><a href="{{ child.get_absolute_url }}" class="site-nav" {% if child == category %}style="color: #0000fe;"{% endif %}>
+                                        {{ child.name|title }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <!--Categories-->
+                    <!--Price Filter-->
+                    <div class="sidebar_widget filterBox filter-widget">
+                        <div class="widget-title">
+                            <h2>Price</h2>
+                        </div>
+                        <div class="price-filter">
+                            <div id="slider-range" max-price="{{ max_price }}" min-price="{{ min_price }}"></div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="mb-2"><input id="amount" class="w-100" type="text" disabled></p>
+                                </div>
+                                <div class="col-6 margin-25px-top">
+                                    <button class="btn btn-secondary btn--small price-filter-clear-btn w-100" id="price-filter-clear-btn">clear</button>
+                                </div>
+                                <div class="col-6 margin-25px-top">
+                                    <button class="btn btn-primary btn--small price-filter-btn w-100" id="price-filter-btn">filter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Price Filter-->
+                    <!--Size Swatches-->
+                    {% if category_products_sizes %}
+                    <div class="sidebar_widget filterBox filter-widget size-swacthes">
+                        <div class="widget-title">
+                            <h2>Size</h2>
+                        </div>
+                        <div class="filter-color swacth-list">
+                            <ul>
+                                {% for size in category_products_sizes %}
+                                {% is_in size.size__id size_ids as size_checked %}
+                                <li><span class="swacth-btn products-size {% if size_checked %} checked {% endif %}"
+                                    value="{{ size.size__id }}">{{ size.size__name|upper }}</span><span class="tooltip-label">{{ size.size__name|upper }}</span></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <!--End Size Swatches-->
+                    <!--Color Swatches-->
+                    {% if category_products_colors %}
+                    <div class="sidebar_widget filterBox filter-widget">
+                        <div class="widget-title">
+                            <h2>Color</h2>
+                        </div>
+                        <div class="filter-color swacth-list clearfix">
+                            <ul>
+                                {% for color in category_products_colors %}
+                                {% is_in color.color__id color_ids as color_checked %}
+                                <li>
+                                    <!-- <input class="swacth-btn color-border products-color" type='checkbox' name='products-color' 
+                                        value="{{ color.color__id }}" style="background-color: {{ color.color__code }};"> -->
+                                    <span class="swacth-btn color-border products-color {% if color_checked %} checked {% endif %}" 
+                                        value="{{ color.color__id }}" style="background-color: {{ color.color__code }};">
+                                    </span>
+                                    <span class="tooltip-label">{{ color.color__name }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <!--End Color Swatches-->
+                </div>
+            </div>
+            <!--End Sidebar-->
+            <!--Main Content-->
+            <div class="col-12 col-sm-12 col-md-9 col-lg-9 main-col">
+                <div class="category-banner-slider">
+                    <div class="slide-item">
+                        <img src="{% static 'assets/images/collection-banner/collection-bnr1.jpg' %}"
+                            data-src="{% static 'assets/images/collection-banner/collection-bnr1.jpg' %}" alt="" />
+                    </div>
+                    <div class="slide-item">
+                        <img src="{% static 'assets/images/collection-banner/collection-bnr2.jpg' %}"
+                            data-src="{% static 'assets/images/collection-banner/collection-bnr2.jpg' %}" alt="" />
+                    </div>
+                </div>
+                <div class="page-title">
+                    <h1>Category Slideshow</h1>
+                </div>
+                <div class="category-description">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+                        of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                        but also the leap into electronic typesetting, remaining essentially unchanged. It was
+                        popularised in the 1960s with the release of Letraset sheets containing.</p>
+                </div>
+
+                <!--Toolbar-->
+                <button type="button" class="btn btn-filter d-block d-md-none d-lg-none"> Product Filters</button>
+                <div class="toolbar">
+                    <div class="filters-toolbar-wrapper">
+                        <div class="row">
+                            <div
+                                class="col-4 col-md-4 col-lg-4 filters-toolbar__item collection-view-as d-flex justify-content-start align-items-center">
+                                <a href="shop-left-sidebar.html" title="Grid View"
+                                    class="change-view change-view--active">
+                                    <i class="anm anm-th" aria-hidden="true"></i>
+                                </a>
+                                <a href="shop-list-view.html" title="List View" class="change-view">
+                                    <i class="anm anm-th-list" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div
+                                class="col-4 col-md-4 col-lg-4 text-center filters-toolbar__item filters-toolbar__item--count d-flex justify-content-center align-items-center">
+                                <span class="filters-toolbar__product-count">Showing: 15 Results</span>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4 text-right">
+                                <div class="filters-toolbar__item">
+                                    <label for="SortBy" class="hidden">Sort</label>
+                                    <select name="SortBy" id="SortBy"
+                                        class="filters-toolbar__input filters-toolbar__input--sort">
+                                        <option value="title-ascending" selected="selected">Sort</option>
+                                        <option>Best Selling</option>
+                                        <option>Alphabetically, A-Z</option>
+                                        <option>Alphabetically, Z-A</option>
+                                        <option>Price, low to high</option>
+                                        <option>Price, high to low</option>
+                                        <option>Date, new to old</option>
+                                        <option>Date, old to new</option>
+                                    </select>
+                                    <input class="collection-header__default-sort" type="hidden" value="manual">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Toolbar-->
+                <!--Product Grid-->
+                <div class="product-load-more" id='partial-product-list'>
+                    {% include 'category/includes/partial_product_list.html' %}
+                </div>
+                <!--Product Paginator-->
+                <div id='partial-product-paginator'>
+                    {% include 'category/includes/partial_product_pagination.html' %}
+                </div>
+            </div>
+            <!--End Main Content-->
+        </div>
+
+    </div>
+    <!-- <div class="container">
+        <div class="page-title"><h1>Category Empty</h1></div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center pt-5 pb-5">
+                <p><img src="{% static 'assets/images/sad-icon.png' %}" alt="" /></p>
+                <h2 class="pb-3"><strong>SORRY,</strong> THIS CATEGORY IS CURRENTY EMPTY</h2>
+                <a href="index.html" class="btn">GO Back</a>
+            </div>
+        </div>
+    
+    </div> -->
+    <!--End Body Container-->
+
+</div>
+<!--End Page Wrapper-->
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script src="{% static 'assets/js/custom/category/category_list.js' %}"></script>
+
+{% endblock scripts %}

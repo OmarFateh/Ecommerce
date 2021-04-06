@@ -1,0 +1,21 @@
+{% load static %}
+
+<div class="swatch clearfix swatch-0 option1" data-option-index="0">
+    <div class="product-form__item">
+        <label class="label">Color:<span class="required">*</span>
+            <span class="slVariant" id='color-name'>{{ first_color }}</span>
+        </label>
+        <div id="product-color">
+            {% for color in product_colors %}
+            <div class="swatch-element color">
+                <input class="swatchInput" id="swatch-{{ color.name }}" type="radio" name="option-0" 
+                {% if forloop.first %}
+                checked
+                {% endif %}
+                value="{{ color.id }}">
+                <label class="swatchLbl small {{ color.name }}" for="swatch-{{ color.name }}" title="{{ color.name|title }}" style="background-color:{{ color.code }};"></label>
+            </div>            
+            {% endfor %}
+        </div>
+    </div>
+</div>

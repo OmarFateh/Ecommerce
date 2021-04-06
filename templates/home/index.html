@@ -1,0 +1,330 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Avone</title>
+{% endblock title %}
+
+{% block content %}
+
+<div id="page-content">
+    <!--Home slider-->
+    <div class="slideshow slideshow-wrapper">
+        <div class="home-slideshow">
+            <div class="slide">
+                <div class="blur-up lazyload">
+                    <img class="blur-up lazyload desktop-hide" data-src="{% static 'assets/images/slideshow-banner/dome2-banner1.jpg' %}" src="{% static 'assets/images/slideshow-banner/dome2-banner1.jpg' %}" alt=" Start Selling Online Successfully" title=" Start Selling Online Successfully" />
+                    <img class="blur-up lazyload mobile-hide" data-src="{% static 'assets/images/slideshow-banner/dome2-banner1-mobile.jpg' %}" src="{% static 'assets/images/slideshow-banner/dome2-banner1-mobile.jpg' %}" alt=" Start Selling Online Successfully" title=" Start Selling Online Successfully" />
+                    <div class="slideshow__text-wrap slideshow__overlay left">
+                        <div class="slideshow__text-content bottom">
+                            <div class="wrap-caption anim-tru left style1">
+                                <p class="mega-small-title">Perfect &amp; Productive</p>
+                                <h2 class="h1 mega-title slideshow__title">Powerful Template for Growing Companies</h2>
+                                <span class="btn">Shop now</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="blur-up lazyload">
+                    <img class="blur-up lazyload desktop-hide" data-src="{% static 'assets/images/slideshow-banner/dome2-banner2.jpg' %}" src="{% static 'assets/images/slideshow-banner/dome2-banner2.jpg' %}" alt="The Powerful Theme You can Trust" title="The Powerful Theme You can Trust" />
+                    <img class="blur-up lazyload mobile-hide" data-src="{% static 'assets/images/slideshow-banner/dome2-banner2-mobile.jpg' %}" src="{% static 'assets/images/slideshow-banner/dome2-banner2-mobile.jpg' %}" alt="The Powerful Theme You can Trust" title="The Powerful Theme You can Trust" />
+                    <div class="slideshow__text-wrap slideshow__overlay left">
+                        <div class="slideshow__text-content">
+                            <div class="wrap-caption anim-tru style1 left">
+                                <h2 class="h1 mega-title slideshow__title">Small studio, Big ideas</h2>
+                                <span class="mega-subtitle slideshow__subtitle">Creative, Flexible and High Performance Template to make your business shine!</span>
+                                <span class="btn">Shop now</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Home slider-->
+    
+    <!--Store Feture-->
+    <div class="store-info style2 store-info-section small-pd d-none d-sm-none d-md-block d-lg-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="display-table store-info style2">
+                        <li class="display-table-cell">
+                            <a href="#"><i class="anm anm-phone-call-l" aria-hidden="true"></i><h5>Call Us Anytime</h5> <span class="sub-text"> <span>+1 (250) 444-5555</span></span></a>
+                        </li>
+                        <li class="display-table-cell">
+                            <i class="anm anm-truck-line" aria-hidden="true"></i><h5>Free Shipping</h5> <span class="sub-text"><span>When you spend $100+</span></span>
+                        </li>
+                        <li class="display-table-cell">
+                            <i class="anm anm-undo-r" aria-hidden="true"></i><h5>Free Returns</h5> <span class="sub-text"> <span>30-days free return policy.</span> </span>
+                        </li>
+                        <li class="display-table-cell">
+                            <i class="anm anm-lock-al" aria-hidden="true"></i><h5>Secured Payments</h5> <span class="sub-text"> <span>We accept all major credit cards.</span> </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Store Feture-->
+    
+     <!--Body Container-->
+     <div class="container">
+        <!--Image Banner-->
+        <div class="section imgBanners style2 no-pb-section">
+            <div class="section-header">
+                <h2>Shop The Edit</h2>
+                <p>The easiest and fastest way to create grid banners.</p>
+            </div>
+            <div class="collection-banners">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 img-banner-item">
+                        <div class="imgBanner-grid-item">
+                            <div class="inner btmleft">
+                                <a href="#">
+                                    <span class="img">
+                                        <img class="blur-up lazyload" data-src="{% static 'assets/images/collection-banner/collection-bn1-style2.jpg' %}" src="{% static 'assets/images/collection-banner/collection-bn1-style2.jpg' %}" alt="" title=" " />
+                                    </span>
+                                    <span class="ttl"><span class="tt-small">Women</span></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 img-banner-item">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 img-banner-item">
+                                <div class="imgBanner-grid-item">
+                                    <div class="inner btmleft">
+                                        <a href="#">
+                                            <span class="img">
+                                                <img class="blur-up lazyload" data-src="{% static 'assets/images/collection-banner/demo14-collection-bnr2.jpg' %}" src="{% static 'assets/images/collection-banner/demo14-collection-bnr2.jpg' %}" alt="" title=" " />
+                                            </span>
+                                            <span class="ttl"><span class="tt-small">Men</span></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 img-banner-item last">
+                                <div class="imgBanner-grid-item">
+                                    <div class="inner btmleft">
+                                        <a href="#">
+                                            <span class="img">
+                                                <img class="blur-up lazyload" data-src="{% static 'assets/images/collection-banner/pexels-amina-filkins-5560019.jpg' %}" src="{% static 'assets/images/collection-banner/pexels-amina-filkins-5560019.jpg' %}" alt="" title=" " />
+                                            </span>
+                                            <span class="ttl"><span class="tt-small">Boys</span></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="imgBanner-grid-item">
+                                    <div class="inner btmleft">
+                                        <a href="#">
+                                            <span class="img">
+                                                <img class="blur-up lazyload" data-src="{% static 'assets/images/collection-banner/collection-bn4-style2.jpg' %}" src="{% static 'assets/images/collection-banner/collection-bn4-style2.jpg' %}" alt="" title=" " />
+                                            </span>
+                                            <span class="ttl"><span class="tt-small">Girls</span></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Image Banner-->
+    </div>
+
+    <!--Body Container-->
+    <div class="container">
+        <!-- Banner Masonary-->
+        <div class="collection-banners style1">
+            <div class="grid-masonary banner-grid">
+                <div class="grid-sizer"></div>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 banner-item">
+                        <div class="collection-grid-item">
+                            <div class="img">
+                                <a href="#">
+                                    <img class="blur-up lazyload"
+                                        data-src="{% static 'assets/images/collection-banner/demo2.jpg' %}"
+                                        src="{% static 'assets/images/collection-banner/demo2.jpg' %}" alt="" title=" " />
+                                        <span class="ttl"><span class="tt-small">Women</span></span>
+                                </a>        
+                            </div>
+                            <div class="details center">
+                                <div class="inner">
+                                    <span class="ttl"><span class="tt-small">Women</span></span>
+                                    <!-- <h3 class="title">Women Tops</h3>
+                                    <p>From world's top designer</p>
+                                    <a href="#;" class="btn">Discover Now</a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 banner-item">
+                        <div class="collection-grid-item">
+                            <div class="img">
+                                <img class="blur-up lazyload"
+                                    data-src="{% static 'assets/images/collection-banner/demo14-collection-bnr2.jpg' %}"
+                                    src="{% static 'assets/images/collection-banner/demo14-collection-bnr2.jpg' %}" alt="" title=" " />
+                            </div>
+                            <div class="details center">
+                                <div class="inner">
+                                    <h3 class="title">Men Shirts</h3>
+                                    <p>Up to 70% off on selected item</p>
+                                    <a href="#;" class="btn">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 banner-item">
+                        <div class="collection-grid-item">
+                            <div class="img">
+                                <img class="blur-up lazyload"
+                                    data-src="{% static 'assets/images/collection-banner/pexels-amina-filkins-5560019.jpg' %}"
+                                    src="{% static 'assets/images/collection-banner/pexels-amina-filkins-5560019.jpg' %}" alt="" title=" " />
+                            </div>
+                            <div class="details center">
+                                <div class="inner">
+                                    <h3 class="title">Boys</h3>
+                                    <p>Find your perfect outfit</p>
+                                    <a href="#;" class="btn">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 banner-item">
+                        <div class="collection-grid-item">
+                            <div class="img">
+                                <img class="blur-up lazyload"
+                                    data-src="{% static 'assets/images/collection-banner/pexels-amina-filkins-5560481.jpg' %}"
+                                    src="{% static 'assets/images/collection-banner/pexels-amina-filkins-5560481.jpg' %}" alt="" title=" " />
+                            </div>
+                            <div class="details center">
+                                <div class="inner">
+                                    <h3 class="title">Girls</h3>
+                                    <p>add finishing touch to your outfit</p>
+                                    <a href="#;" class="btn">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Banner Masonary-->
+    </div>
+    <!--End Collection Box slider-->
+    
+    <!--Parallax Banner-->
+    <div class="section parallax-banner-style1">
+        <div class="hero hero--exlarge hero__overlay bg-size">
+            <img class="bg-img" src="{% static 'assets/images/parallax-banner/parallax-banner1-demo2.jpg' %}" alt="">
+            <div class="hero__inner">
+                <div class="container">
+                    <div class="wrap-text center text-small font-bold">
+                        <span>HOT COLLECTION</span>
+                        <h2 class="h2 mega-title">SUMMER IN THE CITY</h2>
+                        <div class="rte-setting mega-subtitle">the brand continues to champion and further strengthen its core belief of size inclusivity by launching its new collection ‘Summer in the City’. The collection speaks of fresh summer hues, breezy silhouettes and more, available across sizes, all ready to feed the Indian woman’s inner urbanite.</div>
+                        <a href="#" class="btn">View Collection</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Parallax Banner-->
+    
+    <!--Featured Content-->
+    <div class="section style1 featured-content no-pt-section">
+        <div class="container">
+            <div class="row display-table">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 display-table-cell">
+                    <img src="{% static 'assets/images/lookbook/featured-img1.jpg' %}" alt="" title="" />
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 display-table-cell">
+                    <div class="featured-text right">
+                        <h2>Shop the Best Sellers</h2>
+                        <p>Shop our best sellers from emerging and established brands all over the globe</p>
+                        <a href="#" class="btn">Shop It Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row display-table featured-content-bg">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 display-table-cell">
+                    <div class="featured-text left">
+                        <h2>Day to Night</h2>
+                        <p>Whether you're going to the bar from the office or out on the town, browse our Day to Night looks to take you through to the evening, hassle-free</p>
+                        <a href="#" class="btn">View Collection</a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 display-table-cell">
+                    <img src="{% static 'assets/images/lookbook/featured-img2.jpg' %}" alt="" title="" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Featured Content-->
+    
+    <!--Brand Logo Slider-->
+    <div class="section logo-section no-pt-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="logo-bar">
+                        <div class="logo-bar__item">
+                            <a href="#;"><img src="{% static 'assets/images/logo/brandlogo1.png' %}" alt="" title="" /></a>
+                        </div>
+                        <div class="logo-bar__item">
+                            <a href="#;"><img src="{% static 'assets/images/logo/brandlogo2.png' %}" alt="" title="" /></a>
+                        </div>
+                        <div class="logo-bar__item">
+                            <a href="#;"><img src="{% static 'assets/images/logo/brandlogo3.png' %}" alt="" title="" /></a>
+                        </div>
+                        <div class="logo-bar__item">
+                            <a href="#;"><img src="{% static 'assets/images/logo/brandlogo4.png' %}" alt="" title="" /></a>
+                        </div>
+                        <div class="logo-bar__item">
+                            <a href="#;"><img src="{% static 'assets/images/logo/brandlogo5.png' %}" alt="" title="" /></a>
+                        </div>
+                        <div class="logo-bar__item">
+                            <a href="#;"><img src="{% static 'assets/images/logo/brandlogo6.png' %}" alt="" title="" /></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Brand Logo Slider-->
+    <!--Newsletter Section-->
+    <div class="section newsletter-section">
+        <div class="section-header">
+            <h2>Newsletter Subscribe</h2>
+            <p>Sign up to stay in the loop. Receive updates, access to exclusive deals, and more.</p>
+        </div>
+        <div class="display-table">
+            <div class="display-table-cell newsletter-form">
+                <form action="#" method="post">
+                    <div class="input-group">
+                        <input type="email" class="input-group__field newsletter-input" name="EMAIL" value="" placeholder="Email address" required>
+                        <span class="input-group__btn">
+                            <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe"><span class="newsletter__submit-text--large">Subscribe</span></button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--Newsletter Section-->
+</div><!--End Page Wrapper-->
+
+{% endblock content %}
+
+{% block scripts %}
+
+<!-- <script src="{% static 'assets/js/custom/cart/cart.js' %}"></script> -->
+
+{% endblock scripts %}

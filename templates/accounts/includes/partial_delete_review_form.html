@@ -1,0 +1,5 @@
+<!-- form start -->
+<form role="form" action='{{ review.get_update_delete_absolute_url }}' method='POST' class="js-delete-review-form">
+    {% csrf_token %}
+    {% include "accounts/includes/partial_delete_review_modal_form.html" %}
+</form>

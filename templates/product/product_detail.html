@@ -1,0 +1,614 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>{{ product.name|title }} | Product </title>
+{% endblock title %}
+
+{% block content %}
+
+<div id="page-content">
+    <!--Body Container-->
+    <!--Breadcrumbs-->
+    <div class="breadcrumbs-wrapper">
+        <div class="container">
+            <div class="breadcrumbs"><a href="{% url 'home:index' %}" title="Back to the home page">Home</a>
+                {% for category in categories %}
+                <span aria-hidden="true">|</span><a href="{{ category.get_absolute_url }}">{{ category.name|title }}</a>
+                {% endfor %}
+                <span aria-hidden="true">|</span><span>{{ product.name|title }}</span>
+            </div>
+        </div>
+    </div>
+    <!--End Breadcrumbs-->
+    <div class="container">
+        <div class="product-detail-container">
+            <div class="product-single">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="product-details-img">
+                            <div class="product-thumb">
+                                <div id="gallery" class="product-dec-slider-2 product-tab-left"
+                                    data-url="{% url 'product:ajax-fetch-product-images' product.id %}">
+                                    {% for obj in product_images %}
+                                    <a data-image="{{ obj.image.url }}" data-zoom-image="{{ obj.image.url }}"
+                                        class="slick-slide" data-slick-index="{{ forloop.counter }}" aria-hidden="true"
+                                        tabindex="-1">
+                                        <img class="blur-up lazyload" data-src="{{ obj.image.url }}"
+                                            src="{{ obj.image.url }}" alt="" />
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!-- Image Zoom  -->
+                            <div class="zoompro-wrap product-zoom-right pl-20">
+                                <div class="zoompro-span" id="zoompro-span">
+                                    <img id="zoompro" class="zoompro" src="{{ first_image.image.url }}"
+                                        data-zoom-image="{{ first_image.image.url }}" alt="" />
+                                </div>
+                                <div class="product-labels"><span class="lbl pr-label1">new</span></div>
+                            </div>
+                            <div class="lightboximages" id='light-box-images'>
+                                {% for obj in product_images %}
+                                <a href="{{ obj.image.url }}" data-size="1000x1280"></a>
+                                {% endfor %}
+                            </div>
+                            <!-- Social sharing  -->
+                            <div class="social-sharing">
+                                <span class="label">Share:</span>
+                                <a target="_blank" href="#"
+                                    class="btn btn--small btn--secondary btn--share share-facebook"
+                                    title="Share on Facebook">
+                                    <i class="anm anm-facebook-f" aria-hidden="true"></i> <span class="share-title"
+                                        aria-hidden="true">Share</span>
+                                </a>
+                                <a target="_blank" href="#"
+                                    class="btn btn--small btn--secondary btn--share share-twitter"
+                                    title="Tweet on Twitter">
+                                    <i class="fa fa-twitter" aria-hidden="true"></i> <span class="share-title"
+                                        aria-hidden="true">Tweet</span>
+                                </a>
+                                <a href="#" title="Share on google+" class="btn btn--small btn--secondary btn--share">
+                                    <i class="fa fa-google-plus" aria-hidden="true"></i> <span class="share-title"
+                                        aria-hidden="true">Google+</span>
+                                </a>
+                                <a target="_blank" href="#"
+                                    class="btn btn--small btn--secondary btn--share share-pinterest"
+                                    title="Pin on Pinterest">
+                                    <i class="fa fa-pinterest" aria-hidden="true"></i> <span class="share-title"
+                                        aria-hidden="true">Pin it</span>
+                                </a>
+                                <a href="#" class="btn btn--small btn--secondary btn--share share-pinterest"
+                                    title="Share by Email" target="_blank">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i> <span class="share-title"
+                                        aria-hidden="true">Email</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Details  -->
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="product-single__meta">
+                            <h1 class="product-single__title">{{ product.name }}</h1>
+                            <div class="prInfoRow">
+                                <div class="product-review" id="partial-product-avg-rate">
+                                    {% include 'product/includes/partial_product_avg_rate.html' %}
+                                    <!-- <a class="reviewLink" href="#tab2">
+                                            <div class="star-ratings-css">
+                                                <div class="star-ratings-css-top" style="width: {{ avg_rate_precentage }}%">
+                                                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                                </div>
+                                                <div class="star-ratings-css-bottom">
+                                                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                                </div>
+                                            </div>
+                                            <span class="spr-badge-caption product-reviews-count">{{ reviews_count }} review{{ reviews_count|pluralize }}</span>
+                                        </a> -->
+                                </div>
+                                <div class="product-stock">
+                                    {% if product.in_stock %}
+                                    <span class="instock">In Stock</span>
+                                    {% else %}
+                                    <span class="outstock">Out of Stock</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- Product price  -->
+                            <p class="product-single__price product-single__price-product-template">
+                                {% if product.sale_price %}
+                                <span class="visually-hidden">Regular price</span>
+                                <s id="ComparePrice-product-template"><span
+                                        class="money">${{ product.regular_price }}</span></s>
+                                <span
+                                    class="product-price__price product-price__price-product-template product-price__sale product-price__sale--single">
+                                    <span id="ProductPrice-product-template"><span
+                                            class="money">${{ product.sale_price }}</span></span>
+                                </span>
+                                <span class="discount-badge"> <span class="devider">|</span>&nbsp;
+                                    <span>You Save</span>
+                                    <span class="product-single__save-amount"><span
+                                            class="money">${{ product.get_price_sale_difference }}</span></span>
+                                    <span
+                                        class="off">(<span>{{ product.get_price_sale_difference_precentage }}</span>%)</span>
+                                </span>
+                                {% else %}
+                                <span
+                                    class="product-price__price product-price__price-product-template product-price__sale product-price__sale--single">
+                                    <span id="ProductPrice-product-template">
+                                        <span class="money">${{ product.regular_price }}</span>
+                                    </span>
+                                </span>
+                                {% endif %}
+                            </p>
+                            <div class="orderMsg" data-user="23" data-time="24">
+                                <p><strong class="items">5</strong> sold in last <strong class="time">26</strong> hours
+                                </p>
+                            </div>
+                        </div>
+                        <div class="product-single__description rte">
+                            <ul>
+                                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                                <li>Sed ut perspiciatis unde omnis iste natus error sit</li>
+                                <li>Neque porro quisquam est qui dolorem ipsum quia dolor</li>
+                                <li>Lorem Ipsum is not simply random text.</li>
+                            </ul>
+                        </div>
+                        <div id="quantity_message">Hurry! Only <span class="items">4</span> left in stock.</div>
+                        <!-- add to cart form start -->
+                        <form method="post" action="." id="product-form" accept-charset="UTF-8"
+                            class="product-form product-form-product-template hidedropdown"
+                            enctype="multipart/form-data" data-url="{% url 'cart:cart-add' %}">
+                            {% csrf_token %}
+                            <!-- Product Size  -->
+                            {% if product_sizes %}
+                            <div id="partial-product-size"
+                                data-url="{% url 'product:ajax-fetch-product-variation' product.id %}">
+                                {% include 'product/includes/partial_product_size.html' %}
+                            </div>
+                            {% endif %}
+                            <!-- Product Color  -->
+                            {% if product_colors %}
+                            <div id="partial-product-color">
+                                {% include 'product/includes/partial_product_color.html' %}
+                            </div>
+                            {% endif %}
+                            <div class="infolinks row no-gutters">
+                                <div class="col-12 col-lg-6">
+                                    <button class="wishlist add-to-wishlist add-to-wishlist-btn d-flex align-items-center mb-2"
+                                        id="add-to-wishlist-btn" data-url="{% url 'accounts:add-delete-favourite' %}"
+                                        title="Add to Wishlist" data-index="{{ product.id }}"
+                                        modal-url="{% url 'accounts:login-register' %}" {% if request.user.is_authenticated %}
+                                        data-user="true" {% else %} data-user="false" {% endif %}>
+                                        {% if request.user in product.favourites.all %}
+                                        <i class="fa fa-heart text-danger add-to-wishlist-icon mr-1"></i>
+                                        <span class="add-to-wishlist-text">Remove from Wishlist</span>
+                                        {% else %}
+                                        <i class="icon anm anm-heart-l add-to-wishlist-icon mr-1" aria-hidden="true"></i>
+                                        <span class="add-to-wishlist-text">Add to Wishlist</span>
+                                        {% endif %}
+                                        <!-- <span>Add to Wishlist</span> -->
+                                    </button>
+                                    <!-- <span class="wishlist add-to-wishlist mb-2">Add to Wishlist</span> -->
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <a class="wishlist add-to-wishlist d-flex align-items-center mb-2" href="compare-style1.html"
+                                        title="Add to Compare">
+                                        <i class="icon anm anm-sync-ar mr-1" aria-hidden="true"></i>
+                                        <span>Add to Compare</span>
+                                    </a>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <a href="#ShippingInfo" class="mfp btn shippingInfo d-flex align-items-center mb-2">
+                                        <i class="anm anm-paper-l-plane mr-1"></i>
+                                        <span>Delivery &amp; Returns</span>
+                                    </a>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <a href="#productInquiry" class="emaillink btn d-flex align-items-end mb-2">
+                                        <i class="anm anm-envelope-l mr-1"></i>
+                                        <span>Enquiry</span>
+                                    </a>
+                                </div>
+
+                            </div>
+                            <!-- Product Action -->
+                            <div class="product-action clearfix">
+                                <div class="product-form__item--quantity">
+                                    <div class="wrapQtyBtn">
+                                        <div class="qtyField">
+                                            <a class="qtyBtn minus" href="javascript:void(0);"><i
+                                                    class="fa anm anm-minus-r" aria-hidden="true"></i></a>
+                                            <input type="text" id="Quantity" name="quantity" value="1"
+                                                class="product-form__input qty">
+                                            <a class="qtyBtn plus" href="javascript:void(0);"><i
+                                                    class="fa anm anm-plus-r" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-form__item--submit pb-3">
+                                    <button type="submit" name="add" class="btn product-form__cart-submit"
+                                        id="add-to-cart-btn" value="{{ product.id }}">
+                                        <span>Add to cart</span>
+                                    </button>
+                                </div>
+                                <div class="buy-it-btn">
+                                    <button type="button" class="btn" disabled="disabled">Buy it now</button>
+                                </div>
+                            </div>
+                            <!-- End Product Action -->
+                        </form>
+                        <div class="trustseal-img"><img src="{% static 'assets/images/checkout-cards.png' %}" alt="">
+                        </div>
+                        <p id="freeShipMsg" class="freeShipMsg" data-price="199"><i class="fa fa-truck"
+                                aria-hidden="true"></i> Getting Closer! Only <b class="freeShip"><span class="money"
+                                    data-currency-usd="$199.00" data-currency="USD">$199.00</span></b> Away From <b>FREE
+                                SHIPPING!</b></p>
+                        <p class="shippingMsg"><i class="fa fa-clock-o" aria-hidden="true"></i> Estimated
+                            Delivery Between <b id="fromDate">Wed. May 1</b> and <b id="toDate">Tue. May 7</b>.
+                        </p>
+                    </div>
+                    <!-- End Product Details  -->
+                </div>
+            </div>
+        </div>
+        <!--Product Tabs-->
+        <div class="tabs-listing">
+            <ul class="product-tabs">
+                <li rel="tab1" class="active"><a class="tablink">Product Details</a></li>
+                <li rel="tab2"><a class="tablink">Reviews</a></li>
+                <li rel="tab3"><a class="tablink">Size Chart</a></li>
+                <li rel="tab4"><a class="tablink">Shipping &amp; Returns</a></li>
+                <li rel="tab5"><a class="tablink">Custom Tab</a></li>
+            </ul>
+            <div class="tab-container">
+                <h3 class="tabs-ac-style active" rel="tab1">Product Details</h3>
+                <div id="tab1" class="tab-content">
+                    <div class="product-description rte">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-8 col-lg-8 mb-4">
+                                <h3>Specification</h3>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                    Lorem Ipsum has been the industry's standard dummy text ever since the
+                                    1500s, when an unknown printer took a galley of type and scrambled it to
+                                    make a type specimen book. It has survived not only five centuries, but also
+                                    the leap into electronic typesetting, remaining essentially unchanged.</p>
+                                <ul>
+                                    <li>High-neck style</li>
+                                    <li>Drop shoulders</li>
+                                    <li>Flared cuffs</li>
+                                    <li>Asymmetrical hem</li>
+                                </ul>
+                                <h3>Sed ut perspiciatis unde omnis iste natus error sit voluptatem</h3>
+                                <p>You can change the position of any sections such as slider, banner, products,
+                                    collection and so on by just dragging and dropping.&nbsp;</p>
+                                <h3>Lorem Ipsum is not simply random text.</h3>
+                                <p>But I must explain to you how all this mistaken idea of denouncing pleasure
+                                    and praising pain was born and I will give you a complete account of the
+                                    system, and expound the actual teachings of the great explorer of the truth,
+                                    the master-builder of human happiness.</p>
+                                <p>Change colors, fonts, banners, megamenus and more. Preview changes are live
+                                    before saving them.</p>
+                                <h3>1914 translation by H. Rackham</h3>
+                                <p>But I must explain to you how all this mistaken idea of denouncing pleasure
+                                    and praising pain was born and I will give you a complete account of the
+                                    system, and expound the actual teachings of the great explorer of the truth,
+                                    the master-builder of human happiness.</p>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <img data-src="{% static 'assets/images/detail-img.jpg' %}"
+                                    src="{% static 'assets/images/detail-img.jpg' %}" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="tabs-ac-style" rel="tab2">Review</h3>
+                <div id="tab2" class="tab-content">
+                    <!-- Display success message -->
+                    <div class='alert alert-success review-success-message mt-2' style="display: none;"></div>
+                    <div class="row" id="reviews-list">
+                        {% include 'product/includes/partial_product_reviews_list.html' %}
+                    </div>
+                </div>
+
+                <h3 class="tabs-ac-style" rel="tab3">Size Chart</h3>
+                <div id="tab3" class="tab-content">
+                    <h3>Women's Body Sizing Chart</h3>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Size</th>
+                                <th>XS</th>
+                                <th>S</th>
+                                <th>M</th>
+                                <th>L</th>
+                                <th>XL</th>
+                            </tr>
+                            <tr>
+                                <td>Chest</td>
+                                <td>31" - 33"</td>
+                                <td>33" - 35"</td>
+                                <td>35" - 37"</td>
+                                <td>37" - 39"</td>
+                                <td>39" - 42"</td>
+                            </tr>
+                            <tr>
+                                <td>Waist</td>
+                                <td>24" - 26"</td>
+                                <td>26" - 28"</td>
+                                <td>28" - 30"</td>
+                                <td>30" - 32"</td>
+                                <td>32" - 35"</td>
+                            </tr>
+                            <tr>
+                                <td>Hip</td>
+                                <td>34" - 36"</td>
+                                <td>36" - 38"</td>
+                                <td>38" - 40"</td>
+                                <td>40" - 42"</td>
+                                <td>42" - 44"</td>
+                            </tr>
+                            <tr>
+                                <td>Regular inseam</td>
+                                <td>30"</td>
+                                <td>30½"</td>
+                                <td>31"</td>
+                                <td>31½"</td>
+                                <td>32"</td>
+                            </tr>
+                            <tr>
+                                <td>Long (Tall) Inseam</td>
+                                <td>31½"</td>
+                                <td>32"</td>
+                                <td>32½"</td>
+                                <td>33"</td>
+                                <td>33½"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="tabs-ac-style" rel="tab4">Shipping &amp; Returns</h3>
+                <div id="tab4" class="tab-content">
+                    <h4>Returns Policy</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eros justo, accumsan non
+                        dui sit amet. Phasellus semper volutpat mi sed imperdiet. Ut odio lectus, vulputate non
+                        ex non, mattis sollicitudin purus. Mauris consequat justo a enim interdum, in consequat
+                        dolor accumsan. Nulla iaculis diam purus, ut vehicula leo efficitur at.</p>
+                    <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. In blandit nunc enim, sit
+                        amet pharetra erat aliquet ac.</p>
+                    <h4>Shipping</h4>
+                    <p>Pellentesque ultrices ut sem sit amet lacinia. Sed nisi dui, ultrices ut turpis pulvinar.
+                        Sed fringilla ex eget lorem consectetur, consectetur blandit lacus varius. Duis vel
+                        scelerisque elit, et vestibulum metus. Integer sit amet tincidunt tortor. Ut lacinia
+                        ullamcorper massa, a fermentum arcu vehicula ut. Ut efficitur faucibus dui Nullam
+                        tristique dolor eget turpis consequat varius. Quisque a interdum augue. Nam ut nibh
+                        mauris.</p>
+                </div>
+                <h3 class="tabs-ac-style" rel="tab5">Custom Tab</h3>
+                <div id="tab5" class="tab-content">
+                    <p>You can set different tabs for each products.</p>
+                </div>
+            </div>
+        </div>
+        <!--End Product Tabs-->
+
+    </div>
+    <!--End Body Container-->
+
+</div>
+<!--End Page Wrapper-->
+
+{% endblock content %}
+
+{% block modals %}
+
+<!-- Login Popup-->
+<div class="modal fade" id="modal-login">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- Shipping Popup-->
+<div id="ShippingInfo" class="mfpbox mfp-with-anim mfp-hide">
+    <h5>DELIVERY</h5>
+    <ul>
+        <li>Dispatch: Within 24 Hours</li>
+        <li>Free shipping across all products on a minimum purchase of $50.</li>
+        <li>International delivery time - 7-10 business days</li>
+        <li>Cash on delivery might be available</li>
+        <li>Easy 30 days returns and exchanges</li>
+    </ul>
+    <h5>RETURNS</h5>
+    <p>If you do not like the product you can return it within 15 days - no questions asked. This excludes
+        bodysuits, swimwear and clearance sale items. We have an easy and hassle free return policy. Please look
+        at our Delivery &amp; Returns section for further information.</p>
+</div>
+<!-- End Shipping Popup-->
+<!--Product Enuiry Popup-->
+<div id="productInquiry" class="mfpbox mfp-with-anim mfp-hide">
+    <div class="contact-form form-vertical">
+        <div class="page-title">
+            <h3>Product Inquiry Popup</h3>
+        </div>
+        <form method="post" action="#" id="contact_form" class="contact-form">
+            <div class="formFeilds">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <input type="text" id="ContactFormName" name="contact[name]" placeholder="Name" value=""
+                            required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <input type="email" id="ContactFormEmail" name="contact[email]" placeholder="Email"
+                            autocapitalize="off" value="" required>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <input required type="tel" id="ContactFormPhone" name="contact[phone]" pattern="[0-9\-]*"
+                            placeholder="Phone Number" value="">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <textarea required rows="10" id="ContactFormMessage" name="contact[body]"
+                            placeholder="Message"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <input type="submit" class="btn" value="Send Message">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--End Product Enuiry Popup-->
+<!--Size Chart-->
+<div id="sizechart" class="mfpbox mfp-with-anim mfp-hide">
+    <h4>Women's Size Guide</h4>
+    <p class="text-align-center">This is a standardised guide to give you an idea of what size you will need, however
+        some
+        brands may vary from these conversions.</p>
+    <p><strong>Ready to Wear Clothing</strong></p>
+    <table cellspacing="1">
+        <tbody>
+            <tr>
+                <th>Size</th>
+                <th>XXS - XS</th>
+                <th>XS - S</th>
+                <th>S - M</th>
+                <th>M - L</th>
+                <th>L - XL</th>
+                <th>XL - XXL</th>
+            </tr>
+            <tr>
+                <td>UK</td>
+                <td>6</td>
+                <td>8</td>
+                <td>10</td>
+                <td>12</td>
+                <td>14</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <td>US</td>
+                <td>2</td>
+                <td>4</td>
+                <td>6</td>
+                <td>8</td>
+                <td>10</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>Italy (IT)</td>
+                <td>38</td>
+                <td>40</td>
+                <td>42</td>
+                <td>44</td>
+                <td>46</td>
+                <td>48</td>
+            </tr>
+            <tr>
+                <td>France (FR/EU)</td>
+                <td>34</td>
+                <td>36</td>
+                <td>38</td>
+                <td>40</td>
+                <td>42</td>
+                <td>44</td>
+            </tr>
+            <tr>
+                <td>Denmark</td>
+                <td>32</td>
+                <td>34</td>
+                <td>36</td>
+                <td>38</td>
+                <td>40</td>
+                <td>42</td>
+            </tr>
+            <tr>
+                <td>Russia</td>
+                <td>40</td>
+                <td>42</td>
+                <td>44</td>
+                <td>46</td>
+                <td>48</td>
+                <td>50</td>
+            </tr>
+            <tr>
+                <td>Germany</td>
+                <td>32</td>
+                <td>34</td>
+                <td>36</td>
+                <td>38</td>
+                <td>40</td>
+                <td>42</td>
+            </tr>
+            <tr>
+                <td>Japan</td>
+                <td>5</td>
+                <td>7</td>
+                <td>9</td>
+                <td>11</td>
+                <td>13</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <td>Australia</td>
+                <td>6</td>
+                <td>8</td>
+                <td>10</td>
+                <td>12</td>
+                <td>14</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <td>Korea</td>
+                <td>33</td>
+                <td>44</td>
+                <td>55</td>
+                <td>66</td>
+                <td>77</td>
+                <td>88</td>
+            </tr>
+            <tr>
+                <td>China</td>
+                <td>160/84</td>
+                <td>165/86</td>
+                <td>170/88</td>
+                <td>175/90</td>
+                <td>180/92</td>
+                <td>185/94</td>
+            </tr>
+            <tr>
+                <td><strong>Jeans</strong></td>
+                <td>24-25</td>
+                <td>26-27</td>
+                <td>27-28</td>
+                <td>29-30</td>
+                <td>31-32</td>
+                <td>32-33</td>
+            </tr>
+        </tbody>
+    </table>
+    <button title="Close (Esc)" type="button" class="mfp-close">×</button>
+</div>
+<!--End Size Chart-->
+
+{% endblock modals %}
+
+{% block scripts %}
+
+<script>
+    var loginUrl = "{% url 'accounts:login-register' %}";
+</script>
+<script src="{% static 'assets/js/custom/accounts/register.js' %}"></script>
+<script src="{% static 'assets/js/custom/product/product_detail.js' %}"></script>
+
+{% endblock scripts %}

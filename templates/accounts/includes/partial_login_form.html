@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <h4 class="modal-title">You need to login first!</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<!-- modal body -->
+<div class="modal-body">
+    <div class="card-body row">
+        <!-- Login Form  -->
+        <div class="col-12 col-xl-4 border-xl-right">
+            <h3 class="mb-3">Login</h3>
+            <form role="form" action='{% url "accounts:login-register" %}' method='POST' class="js-login-form">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="customer-email">Email <span class="required">*</span></label>
+                            <input type="email" name="email" id="customer-email" class="" autocorrect="off"
+                                autocapitalize="off" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="customer-password">Password <span class="required">*</span></label>
+                            <input type="password" name="password" id="customer-password" required>
+                        </div>
+                    </div>
+                </div>
+                <!-- Display email error message -->
+                <div class="row pb-3 error-message d-none">
+                    <div class="col-12">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-danger pl-0 pb-2" role="alert">
+                            <p class="error-message-text">
+                                <strong></strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-right col-12 col-sm-12 col-md-12 col-lg-12">
+                        <input type="submit" class="btn mb-3" value="Sign In">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Register Form  -->
+        <div class="col-12 col-xl-8">
+            <h3 class="mb-3">Create New Account</h3>
+            <form method="post" action="{% url 'accounts:login-register' %}" accept-charset="UTF-8"
+                class="js-register-form">
+                {% csrf_token %}
+                {% include 'accounts/includes/partial_register_form.html' %}
+                <div class="row">
+                    <div class="text-right col-12 col-sm-12 col-md-12 col-lg-12">
+                        <input type="submit" class="btn mb-3" id="signup" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+{% load static %}
+
+{% if cart|length %}
+<div class="col-12 col-sm-12 col-md-8 col-lg-8 main-col">
+    <form action="." method="post" class="cart style2">
+        {% csrf_token %}
+        <table>
+            <thead class="cart__row cart__header">
+                <tr>
+                    <th colspan="2" class="text-center">Product</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-right">Total</th>
+                    <th class="action">Update</th>
+                    <th class="action">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr class="cart__row border-bottom line1 cart-flex border-top product-item" data-index="{{ item.variation_id }}">
+                    <td class="cart__image-wrapper cart-flex-item">
+                        <a href="{{ item.variation_product_url }}"><img class="cart__image"
+                            src="{{ item.variation_image }}"
+                            alt="{{ item.variation_product_name|title }} - {{ item.variation_color|title }} / {{ variation.size.name }}"></a>
+                    </td>
+                    <td class="cart__meta small--text-left cart-flex-item">
+                        <div class="list-view-item__title">
+                            <a href="{{ item.variation_product_url }}">{{ item.variation_product_name|title }} </a>
+                        </div>
+
+                        <div class="cart__meta-text">
+                            Color: {{ item.variation_color|title }}<br>Size: {{ item.variation_size|upper }}<br>
+                        </div>
+                    </td>
+                    <td class="cart__price-wrapper cart-flex-item">
+                        <span class="money">${{ item.variation_actual_price }}</span>
+                    </td>
+                    <td class="cart__update-wrapper cart-flex-item text-right">
+                        <div class="cart__qty text-center">
+                            <div class="qtyField">
+                                <a class="qtyBtn minus" href="javascript:void(0);"><i
+                                        class="icon icon-minus"></i></a>
+                                <input class="cart__qty-input qty" type="text" name="updates[]" id="qty{{ item.variation_id }}"
+                                    value="{{ item.qty }}" pattern="[0-9]*">
+                                <a class="qtyBtn plus" href="javascript:void(0);"><i
+                                        class="icon icon-plus"></i></a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-right small--hide cart-price">
+                        <div><span>$<span class="money" id="item-total-price{{ item.variation_id }}">{{ item.total_price }}</span></span></div>
+                    </td>
+                    <td class="text-center small--hide item-update">
+                        <button type="button" name="update" class="btn btn--secondary edit-i bg-white update-cart-btn" data-url="{% url 'cart:cart-update-delete' %}"
+                            data-index="{{ item.variation_id }}" title="Update">
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                    </td>
+                    <td class="text-center small--hide item-delete">
+                        <button type="button" name="delete" class="btn btn--secondary cart__remove bg-white mt-0 mr-0 delete-cart delete-from-cart-btn" data-url="{% url 'cart:cart-update-delete' %}"
+                            data-index="{{ item.variation_id }}" title="Remove">
+                            <i class="fa fa-close"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-left"><a href="{% url 'home:index' %}"
+                            class="btn--link cart-continue"><i class="icon icon-arrow-circle-left"></i>
+                            Continue shopping</a>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+<div class="col-12 col-sm-12 col-md-4 col-lg-4 cart__footer">
+    <div class="cart-note">
+        <div class="solid-border">
+            <h5><label for="CartSpecialInstructions" class="cart-note__label small--text-center">Add a note
+                    to your order</label></h5>
+            <textarea name="note" id="CartSpecialInstructions" class="cart-note__input"></textarea>
+        </div>
+    </div>
+    <div class="solid-border">
+        <div class="row">
+            <span class="col-12 col-sm-6 cart__subtotal-title"><strong>Subtotal</strong></span>
+            <span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right">$<span
+                    class="money cart-total-price" id='cart-total-price'>{{ cart.get_total_price }}</span></span>
+        </div>
+        <div class="cart__shipping">Shipping &amp; taxes calculated at checkout</div>
+        <p class="cart_tearm">
+            <label>
+                <input type="checkbox" name="tearm" id="cartTearm" class="checkbox" value="tearm" required>
+                I agree with the terms and conditions</label>
+        </p>
+        <a href="{% url 'checkout:checkout' %}"><button id="cart-checkout" class="btn btn--small-wide checkout">Proceed To Checkout</button></a>
+        <div class="paymnet-img"><img src="{% static 'assets/images/payment-img.jpg' %}" alt="Payment"></div>
+    </div>
+
+</div>
+{% else %}
+<div class="cart-empty-state d-flex align-items-center justify-content-center flex-column">
+    <i class="fa fa-shopping-cart"></i>
+    <p class="cart-empty-state-text">Your Shopping Cart is Empty.</p>
+    <a href="{% url 'home:index' %}"><button class="btn mt-1">Continue Shopping</button></a>
+</div>
+{% endif %}

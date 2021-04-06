@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Shopping Cart</title>
+{% endblock title %}
+
+{% block content %}
+
+<div id="page-content">
+    <!--Body Container-->
+    <!--Breadcrumbs-->
+    <div class="breadcrumbs-wrapper">
+        <div class="container">
+            <div class="breadcrumbs"><a href="{% url 'home:index' %}" title="Back to the home page">Home</a> <span
+                    aria-hidden="true">|</span> <span>Shopping Cart</span></div>
+        </div>
+    </div>
+    <!--End Breadcrumbs-->
+    <!--Page Title with Image-->
+    <div class="page-title">
+        <h1>Shopping Cart</h1>
+    </div>
+    <!--End Page Title with Image-->
+    <div class="container">
+        <div class="row" id='partial-cart'>
+            <!--Main Content-->
+            <!-- <div id='partial-cart'> -->
+            {% include 'cart/includes/partial_cart_summary.html' %}
+            <!-- </div> -->
+            <!--End Main Content--> 
+        </div>
+    </div>
+    <!--End Body Container-->
+
+</div>
+<!--End Page Wrapper-->
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script src="{% static 'assets/js/custom/cart/cart.js' %}"></script>
+
+{% endblock scripts %}

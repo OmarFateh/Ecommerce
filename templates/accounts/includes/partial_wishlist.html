@@ -1,0 +1,36 @@
+{% load category_tags %}
+
+{% for product in favourites_list %}
+{% get_product_thumbnail product.id as product_thumbnail %}
+<tr>
+    <td class="text-center">{{ forloop.counter }}</td>
+    <td class="product-thumbnail text-center">
+        <a href="{{ product.get_absolute_url }}"><img src="{{ product_thumbnail.image.url }}" alt="" title=""></a>
+    </td>
+    <td class="product-name text-center"><h4 class="no-margin"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4></td>
+    <td class="product-price text-center">
+        {% if product.sale_price %}
+        <s id="ComparePrice-product-template"><span class="money">${{ product.regular_price }}</span></s>
+        <span class="amount">${{ product.sale_price }}</span>
+        {% else %}
+        <span class="amount">${{ product.regular_price }}</span>
+        {% endif %}
+    </td>
+    <td class="stock text-center">
+        {% if product.in_stock %}
+        <span class="in-stock">in stock</span>
+        {% else %}
+        <span class="out-stock">Out Of stock</span>
+        {% endif %}
+    </td>
+    <td class="product-remove text-center" valign="middle">
+        <button type="button" name="delete" class="btn btn--secondary bg-white delete-favourite-btn" data-index="{{ product.id }}" title="Remove">
+            <i class="icon icon anm anm-times-l"></i>
+        </button>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="6" class="text-center bg-warning">No products have been added to your wishlist yet.</td>
+</tr>
+{% endfor %}

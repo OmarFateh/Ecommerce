@@ -1,0 +1,45 @@
+<fieldset class="spr-form-contact">
+    <div class="spr-form-review-rating">
+        <label class="spr-form-label">How do you rate this product?<span
+                class="required">*</span></label>
+        <div class="spr-form-input spr-starrating">
+            <div class="product-review float-left" id='product-review-rate'>
+                <input type="radio" name="rate" value="5" id="rate-5" required>
+                <label for="rate-5" class="fa fa-star" title="Amazing"></label>
+                <input type="radio" name="rate" value="4" id="rate-4" required>
+                <label for="rate-4" class="fa fa-star" title="Very good"></label>
+                <input type="radio" name="rate" value="3" id="rate-3" required>
+                <label for="rate-3" class="fa fa-star" title="Average"></label>
+                <input type="radio" name="rate" value="2" id="rate-2" required>
+                <label for="rate-2" class="fa fa-star" title="Not good"></label>
+                <input type="radio" name="rate" value="1" id="rate-1" required>
+                <label for="rate-1" class="fa fa-star" title="Terrible"></label>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset class="spr-form-review mt-3">
+    <div class="spr-form-review-title">
+        <label class="spr-form-label" for="review">Review Title</label>
+        {{ form.title }}
+        <!-- <input class="spr-form-input spr-form-input-text " id="review-title" type="text"
+            name="review"> -->
+    </div>
+
+    <div class="spr-form-review-body">
+        <label class="spr-form-label" for="message">Body of Review <span
+                class="spr-form-review-body-charactersremaining">(1500)
+                characters remaining</span></label>
+        <div class="spr-form-input">
+            {{ form.content }}
+            <!-- <textarea class="spr-form-input spr-form-input-textarea " id="review-body"
+                name="message" rows="5"></textarea> -->
+        </div>
+    </div>
+</fieldset>
+<div class="spr-form-actions text-right">
+    <button type="submit"
+        class="spr-button button button-primary btn btn-primary" id='save-review'
+        value="Submit Review">Save Review
+    </button>
+</div>

@@ -1,0 +1,42 @@
+<div class="spr-form clearfix">
+    <h3 class="spr-form-title">Your Own Review</h3>
+    {% if is_review_exists %}
+    <div class="review-inner">
+        <div class="spr-review">
+            <div class="spr-review-header">
+                <span class="product-review spr-starratings spr-review-header-starratings">
+                    <span class="reviewLink">
+                        <div class="star-ratings-css">
+                            <div class="star-ratings-css-top" style="width: {{ user_product_review.get_rate_precentage }}%">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                            <div class="star-ratings-css-bottom">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                        </div>
+                    </span>
+                </span>
+                <h3 class="spr-review-header-title">{{ user_product_review.title }}</h3>
+                <span class="spr-review-header-byline"><strong>{{ user_product_review.user.first_name|title }}</strong> on
+                    <strong>{{ user_product_review.created_at|date:"d M Y" }}</strong></span>
+            </div>
+            <div class="spr-review-content">
+                <p class="spr-review-content-body">{{ user_product_review.content }}</p>
+            </div>
+        </div>
+    </div>  
+    <div class="spr-form-actions text-right">
+        <button class="spr-button button button-primary btn btn-primary" id='update-review' data-index="{{ user_product_review.id }}" data-url="{% url 'product:update-review' %}"
+            value="Submit Review">Update Review
+        </button>
+        <button class="spr-button button button-primary btn btn-primary delete-review" id='delete-review' modal-url="{% url 'product:delete-review' %}"
+            value="Submit Review">Delete Review
+        </button>
+    </div>  
+    {% else %}
+    <form method="post" {% if is_updated %} action="{% url 'product:update-review' %}" class="js-update-review-form" {% else %} action="{% url 'product:add-review' %}" class="js-add-review-form" {% endif %}>
+        {% csrf_token %}
+        {% include 'accounts/includes/partial_review_form.html' %}
+    </form>
+    {% endif %}
+</div>

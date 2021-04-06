@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Order Placed</title>
+{% endblock title %}
+
+{% block content %}
+
+<div id="page-content">
+    <!--Body Container-->
+    <!--Breadcrumbs-->
+    <div class="breadcrumbs-wrapper">
+        <div class="container">
+            <div class="breadcrumbs"><a href="{% url 'home:index' %}" title="Back to the home page">Home</a> 
+                <span aria-hidden="true">|</span> <span>Checkout</span>
+                <span aria-hidden="true">|</span> <span>Order Placed</span>
+            </div>
+        </div>
+    </div>
+    <!--End Breadcrumbs-->
+    <!--Page Title with Image-->
+    <div class="page-title">
+        <h1>Order has been placed successfully</h1>
+    </div>
+    <!--End Page Title with Image-->
+    <div class="container">
+        <div class="row">
+            <!--Main Content-->
+            <div class="order-placed-done d-flex align-items-center justify-content-center flex-column">
+                <p class="order-placed-done-text">Thank you for purchasing our products! Check your Email for Confirmation.</p>
+                <div class="mb-4">
+                    <div class="row">
+                        <div class="text-left col-12 col-sm-12 col-md-12 col-lg-12">
+                        <a href="{% url 'accounts:profile' %}"><button class="btn mt-1">Check Orders</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

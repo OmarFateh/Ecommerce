@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load category_tags %}
+
+{% block title %}
+<title>My Account</title>
+{% endblock title %}
+
+{% block content %}
+
+<div id="page-content">        
+    <!--Body Container-->
+    <!--Breadcrumbs-->
+    <div class="breadcrumbs-wrapper">
+        <div class="container">
+            <div class="breadcrumbs"><a href="{% url 'home:index' %}" title="Back to the home page">Home</a> <span aria-hidden="true">|</span> <span>My Account</span></div>
+        </div>
+    </div>
+    <!--End Breadcrumbs-->
+    <div class="container">
+        <div class="page-title"><h1>My Account</h1></div>
+        <div class="row mb-5">
+            <div class="col-xl-2 col-lg-2 col-md-12 md-margin-20px-bottom">
+                <!-- Nav tabs -->
+                <ul class="nav flex-column dashboard-list" role="tablist">
+                    <li><button class="tablinks active" data-index="dashboard">Dashboard</button></li>
+                    <li><button class="tablinks" data-index="orders">Orders</button></li>
+                    <li><button class="tablinks" data-index="wishlist">Wishlist</button></li>
+                    <li><button class="tablinks" data-index="reviews">Reviews</button></li>
+                    <li><button class="tablinks" data-index="account-details">Account details</button></li>
+                </ul>
+                <!-- End Nav tabs -->
+            </div>
+
+            <div class="col-xs-10 col-lg-10 col-md-12">
+                <!-- Tab panes -->
+                <div class="tab-content dashboard-content padding-30px-all md-padding-15px-all">
+                    <!-- Dashboard -->
+                    <div id="dashboard" class="tab-pane tabcontent fade active show">
+                        <h3>Dashboard </h3>
+                        <p>From your account dashboard. you can easily check &amp; view your
+                            <a class="text-decoration-underline" href="#">recent orders</a>, manage your
+                            <a class="text-decoration-underline" href="#">shipping and billing addresses</a> and
+                            <a class="text-decoration-underline" href="#">edit your password and account details.</a>
+                        </p>
+                    </div>
+                    <!-- End Dashboard -->
+
+                    <!-- Orders -->
+                    <div id="orders" class="product-order tabcontent tab-pane">
+                        <h3>Orders</h3>
+                        <div class="table-responsive">
+                            <table class="table" id='orders-table'>
+                                <thead class="alt-font">
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Product</th>
+                                        <th class="text-center">Date</th>
+                                        <th>Status</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th>Reviews</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% include 'accounts/includes/partial_orders_list.html' %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End Orders -->
+
+                    <!-- Wishlist -->
+                    <div id="wishlist" class="tabcontent tab-pane">
+                        <form action="#">
+                            {% csrf_token %}
+                            <h3>Wishlist</h3>
+                            <div class="wishlist-table table-content table-responsive">
+                                <table class="table table-bordered" id="wishlist-table" data-url="{% url 'accounts:add-delete-favourite' %}">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center alt-font">#</th>
+                                            <th class="product-price text-center alt-font">Image</th>
+                                            <th class="product-name alt-font text-center">Product</th>
+                                            <th class="product-price text-center alt-font">Unit Price</th>
+                                            <th class="stock-status text-center alt-font">Status</th>
+                                            <th class="product-name text-center alt-font">Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% include 'accounts/includes/partial_wishlist.html' %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- End Wishlist -->
+
+                    <!-- Reviews -->
+                    <div id="reviews" class="tabcontent tab-pane">
+                        <h3>Reviews</h3>
+                        <!-- Display success message -->
+                        <div class='alert alert-success review-success-message mt-2' style="display: none;"></div> 
+                        <div class="table-responsive">
+                            <table class="table" id='reviews-table'>
+                                <thead class="alt-font">
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Product</th>
+                                        <th class="text-center">Date</th>
+                                        <th class="text-center">Review</th>
+                                        <th class="text-center">Rate</th>
+                                        <th class="text-center">Edit</th>
+                                        <th class="text-center">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% include 'accounts/includes/partial_reviews_list.html' %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End Reviews -->
+
+                    <!-- Account Details -->
+                    <div id="account-details" class="tabcontent tab-pane">
+                        <h3>Account details </h3>
+                        <!-- Display success message -->
+                        <div class='alert alert-success message mt-2' style="display: none;"></div> 
+                        <div class="account-login-form bg-light-gray padding-20px-all" id="partial-profile-form">
+                            {% include 'accounts/includes/partial_profile_form.html' %}
+                        </div>
+                    </div>
+                    <!-- End Account Details -->
+                </div>
+                <!-- End Tab panes -->
+            </div>
+        </div>
+    </div><!--End Body Container-->
+</div><!--End Page Wrapper-->
+
+{% endblock content %}
+
+{% block modals %}
+
+<!-- Review Popup-->
+<div class="modal fade" id="modal-review">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+{% endblock modals %}
+
+{% block scripts %}
+
+<script>
+    var favouriteUrl = "{% url 'accounts:add-delete-favourite' %}";
+    var starRateUrl = "{% url 'product:ajax-fetch-product-user-rate' %}";
+</script>
+<script src="{% static 'assets/js/custom/accounts/profile.js' %}"></script>
+
+{% endblock scripts %}
