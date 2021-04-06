@@ -6,7 +6,6 @@
 * [Setup](#setup)
 * [Features](#features)
 * [TODO](#TODO)
-* [User Login](#User-Login)
 
 ## Technologies
 * Python 3.9
@@ -35,7 +34,3 @@ Run the server
 
 ## TODO
 * Implement Product comparison
-
-## User Login
-email = admin@gmail.com
-password = admin
