@@ -1,5 +1,5 @@
 # Instagram Clone
-> An ecommerce project made with django framework.
+> An ecommerce project made with django framework and Stripe payment.
 
 ## Table of contents
 * [Technologies](#technologies)
@@ -10,6 +10,7 @@
 ## Technologies
 * Python 3.9
 * Django 2.2.19
+* Stripe
 
 ## Setup
 The first thing to do is to clone the repository:  
