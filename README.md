@@ -1,4 +1,4 @@
-# Instagram Clone
+# Ecommerce Project
 > An ecommerce project made with django framework and Stripe payment.
 
 ## Table of contents
